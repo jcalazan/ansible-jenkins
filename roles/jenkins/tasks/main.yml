@@ -1,0 +1,23 @@
+---
+
+- name: Add the Jenkins public GPG key to the apt repo
+  apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key
+           state=present
+
+- name: Add Jenkins to the trusted sources list
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian-stable binary/'
+                  update_cache={{ update_apt_cache }}
+                  state=present
+
+- name: Install Jenkins server
+  apt: name=jenkins state=installed
+
+- include: install_docker.yml
+
+- name: Install additional Python packages
+  pip: name={{ item }} state=latest
+  with_items:
+    - ansible
+    - docker-compose
+    - flake8
+    - awscli

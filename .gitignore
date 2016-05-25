@@ -1,0 +1,5 @@
+# PyCharm IDE
+.idea
+
+# Ansible
+*.retry

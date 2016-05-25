@@ -1,0 +1,34 @@
+upstream jenkins {
+  # fail_timeout=0 means we always retry an upstream even if it failed
+  # to return a good HTTP response (in case the Unicorn master nukes a
+  # single worker for timing out).
+
+  server 127.0.0.1:8080 fail_timeout=0;
+}
+
+server {
+    listen      80;
+    server_name {{ nginx_server_name }};
+    rewrite     ^ https://$server_name$request_uri? permanent;
+}
+
+server {
+    listen  443 ssl;
+    server_name {{ nginx_server_name }};
+    ssl_certificate {{ ssl_dest_dir }}/{{ application_name }}.crt;
+    ssl_certificate_key {{ ssl_dest_dir }}/{{ application_name }}.key;
+
+    client_max_body_size 4G;
+
+    access_log /var/log/nginx/jenkins_access.log;
+    error_log /var/log/nginx/jenkins_error.log;
+
+    location / {
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_redirect http:// https://;
+        proxy_pass              http://jenkins;
+    }
+}
