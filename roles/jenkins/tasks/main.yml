@@ -1,11 +1,19 @@
 ---
 
+- name: Install packages and dependencies
+  apt: name={{ item }} update_cache={{ update_apt_cache }} state=installed
+  with_items:
+    - openjdk-7-jdk
+    - libfontconfig
+    - libffi-dev
+    - libncurses5-dev
+
 - name: Add the Jenkins public GPG key to the apt repo
-  apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key
+  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
            state=present
 
 - name: Add Jenkins to the trusted sources list
-  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian-stable binary/'
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
                   update_cache={{ update_apt_cache }}
                   state=present
 

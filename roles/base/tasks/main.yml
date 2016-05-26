@@ -23,9 +23,7 @@
     - ntp
     - htop
     - git
-    - libfontconfig
     - libpq-dev
-    - libffi-dev
     - python-dev
     - python-pip
     - python-pycurl
