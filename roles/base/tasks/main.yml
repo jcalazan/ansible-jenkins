@@ -16,6 +16,7 @@
 - name: Install base packages
   apt: name={{ item }} update_cache={{ update_apt_cache }} force=yes state=installed
   with_items:
+    - awscli
     - build-essential
     - apt-transport-https
     - ca-certificates
@@ -28,6 +29,7 @@
     - python-pip
     - python-pycurl
     - supervisor
+    - unzip
   tags: packages
 
 - name: Upgrade pip

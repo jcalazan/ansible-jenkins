@@ -2,6 +2,12 @@
 
 - name: Provision a Jenkins CI server
   hosts: all
+  gather_facts: no
+  pre_tasks:
+    - name: Install Python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: False
+    - setup: # aka gather_facts
   become: yes
   become_user: root
   remote_user: root
@@ -10,5 +16,7 @@
 
   roles:
     - base
+#    - certbot
     - jenkins
     - nginx
+    - ufw

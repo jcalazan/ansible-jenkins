@@ -2,6 +2,8 @@
 
 Ansible Playbook for provisioning a Jenkins CI server behind an Nginx proxy.
 
+Tested on Ubuntu 16.04 x64.
+
 ### Usage
 
 ```

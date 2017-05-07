@@ -3,7 +3,7 @@
 - name: Install packages and dependencies
   apt: name={{ item }} update_cache={{ update_apt_cache }} state=installed
   with_items:
-    - openjdk-7-jdk
+    - default-jdk
     - libfontconfig
     - libffi-dev
     - libncurses5-dev
@@ -26,6 +26,7 @@
   pip: name={{ item }} state=latest
   with_items:
     - ansible
+    - boto
     - docker-compose
     - flake8
-    - awscli
+    - passlib
