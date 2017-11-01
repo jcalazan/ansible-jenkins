@@ -1,5 +1,8 @@
 ---
 
+ansible_python_interpreter: /usr/bin/python3
+base_python_package: "{{ ansible_python_interpreter | default('/usr/bin/python') | basename }}"
+
 create_swap_file: yes
 swap_file_path: /swapfile
 swap_file_size_kb: 2048
