@@ -1,7 +1,7 @@
 ---
 
 - name: Install packages and dependencies
-  apt: name={{ item }} update_cache={{ update_apt_cache }} state=installed
+  apt: name={{ item }} update_cache={{ update_apt_cache }} state=present
   with_items:
     - default-jdk
     - libfontconfig
@@ -18,15 +18,12 @@
                   state=present
 
 - name: Install Jenkins server
-  apt: name=jenkins state=installed
-
-- include: install_docker.yml
+  apt: name=jenkins state=present
 
 - name: Install additional Python packages
   pip: name={{ item }} state=latest
   with_items:
     - ansible
     - boto
-    - docker-compose
     - flake8
     - passlib
