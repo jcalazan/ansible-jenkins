@@ -3,7 +3,7 @@
 - name: Install packages and dependencies
   apt: name={{ item }} update_cache={{ update_apt_cache }} state=present
   with_items:
-    - default-jdk
+    - openjdk-8-jdk  # this specific version is needed for Jenkins to run
     - libfontconfig
     - libffi-dev
     - libncurses5-dev
@@ -12,7 +12,7 @@
   apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
            state=present
 
-- name: Add Jenkins to the trusted sources list
+- name: Add Jenkins apt repo to the trusted sources list
   apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
                   update_cache={{ update_apt_cache }}
                   state=present

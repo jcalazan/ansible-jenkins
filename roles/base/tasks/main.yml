@@ -11,11 +11,6 @@
   tags: packages
         packages.security
 
-- name: Add Felix Krull's New Python Versions PPA to the apt sources list
-  apt_repository: repo='ppa:fkrull/deadsnakes'
-                  update_cache={{ update_apt_cache }}
-                  state=present
-
 - name: Install base packages
   apt: name={{ item }} update_cache={{ update_apt_cache }} force=yes state=present
   with_items:
